@@ -35,7 +35,6 @@ def main():
     for archivo in archivos:
         try:
             # Cargar el archivo Excel
-            # Cargar el archivo Excel
             workbook = openpyxl.load_workbook(archivo)
 
             # Obtener las primeras 7 hojas
