@@ -4,6 +4,7 @@ import os
 def obtener_archivos_xlsx_en_directorio_actual():
   directorio_actual = os.getcwd()
   archivos_xlsx = [archivo for archivo in os.listdir(directorio_actual) if archivo.endswith('.xlsx') and not archivo.startswith('~') and not archivo.startswith('.') and not archivo.startswith('RESUMEN_')]
+  print(archivos_xlsx)
   return archivos_xlsx
   
   
@@ -36,7 +37,7 @@ def main():
         try:
             # Cargar el archivo Excel
             workbook = openpyxl.load_workbook(archivo)
-
+            print(f'Revisando{archivo}')
             # Obtener las primeras 7 hojas
             hojas = workbook.worksheets[:7]
 
@@ -57,7 +58,7 @@ def main():
             
         except (PermissionError, FileNotFoundError, openpyxl.utils.exceptions.InvalidFileException) as e:
             print(f"Error al procesar el archivo {archivo}: {e}")
-            continue  
+            continue 
         exportar_a_excel(f'RESUMEN_FINAL',total_result)
 main()
     
