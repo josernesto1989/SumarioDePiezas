@@ -20,7 +20,7 @@ def exportar_a_excel(nombre, resultados):
         hoja[f'{letra_columna}1']=key
         j=2
         for value in resultados[key]:
-            hoja[f'{letra_columna}{j}']=value if value else "<<VACIO>>"
+            hoja[f'{letra_columna}{j}']= str(value if value else "<<VACIO>>")
             j+=1
             if j-2 == len(resultados[key]):
                 hoja[f'{letra_columna}{j+1}'] = f'TOTAL: {j-2}'
@@ -40,6 +40,7 @@ def main():
             print(f'Revisando{archivo}')
             # Obtener las primeras 7 hojas
             hojas = workbook.worksheets[:7]
+            fileName = archivo[:-5]
 
             result={}
             # Iterar sobre cada hoja y realizar alguna acción 
@@ -52,8 +53,8 @@ def main():
                             result[pieza]=[]
                             if pieza  not in total_result.keys():
                                 total_result[pieza]=[]
-                        result[pieza].append(hoja[f'C{i}'].value)
-                        total_result[pieza].append(hoja[f'C{i}'].value)
+                        result[pieza].append(str(hoja[f'C{i}'].value if hoja[f'C{i}'].value else "<<VACIO>>")+  (f' [{fileName}'))
+                        total_result[pieza].append(str(hoja[f'C{i}'].value if hoja[f'C{i}'].value else "<<VACIO>>")+ (f' [{fileName}]'))
             exportar_a_excel(f'RESUMEN_{archivo}',result)
             
         except (PermissionError, FileNotFoundError, openpyxl.utils.exceptions.InvalidFileException) as e:
