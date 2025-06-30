@@ -5,7 +5,7 @@ __pycache__/
 *.xlsx
 # C extensions
 *.so
-
+.DS_Store
 # Distribution / packaging
 .Python
 build/
