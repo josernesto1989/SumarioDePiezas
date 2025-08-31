@@ -43,5 +43,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: SumarioDePiezas-Windows-Executable
-        path: dist/app.exe
+        path: dist/main.exe
         retention-days: 30
