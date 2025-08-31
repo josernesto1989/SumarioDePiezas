@@ -36,7 +36,7 @@ jobs:
     #            'source;destination' - en Windows se usa un punto y coma.
     - name: Build with PyInstaller
       run: |
-        pyinstaller app.py --onefile --windowed --add-data "main_window.ui;."
+        pyinstaller main.py --onefile --windowed --add-data "main_window.ui;."
   
     # 5. Cargar el ejecutable como un artefacto de GitHub
     - name: Upload executable
