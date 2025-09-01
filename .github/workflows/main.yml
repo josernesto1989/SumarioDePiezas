@@ -1,0 +1,47 @@
+on:
+  push:
+    branches:
+      - main  # O la rama principal de tu proyecto, por ejemplo 'master'
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    # Nombre del trabajo
+    name: Build for Windows
+  # El entorno de ejecución. 'windows-latest' utiliza la última versión de Windows Server.
+  
+
+    steps:
+    # 1. Checkout del código del repositorio
+    - name: Checkout repository
+      uses: actions/checkout@v4
+  
+    # 2. Configurar Python
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+  
+    # 3. Instalar las dependencias de Python
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt 
+        pip install pyinstaller
+
+  
+    # 4. Compilar la aplicación con PyInstaller
+    # --onefile: crea un solo archivo ejecutable
+    # --windowed: oculta la consola de fondo (recomendado para aplicaciones con GUI)
+    # --add-data: incluye el archivo .ui en el paquete. La sintaxis es crucial:
+    #            'source;destination' - en Windows se usa un punto y coma.
+    - name: Build with PyInstaller
+      run: |
+        pyinstaller main.py --onefile --windowed --add-data "main_window.ui;."
+  
+    # 5. Cargar el ejecutable como un artefacto de GitHub
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: SumarioDePiezas-Windows-Executable
+        path: dist/main.exe
+        retention-days: 30
