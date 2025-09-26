@@ -27,9 +27,7 @@ class ExcelProcessor:
                 result={}
                 # Iterar sobre cada hoja y realizar alguna acción 
                 for hoja in hojas:
-                    print(f'primer for')
                     for i in range(3,151):
-                        print(f'segundo for')
                         pieza = hoja[f'B{i}'].value
                         pieza = pieza.upper() if pieza else pieza
                         if  pieza in tipos_de_piezas:
