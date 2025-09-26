@@ -1,7 +1,7 @@
 # Este módulo define la ventana principal (la Vista).
 # Se encarga de la interfaz de usuario y la comunicación con el ViewModel.
 from PyQt6 import QtWidgets, uic
-from PyQt6.QtCore import QUrl, Qt
+from PyQt6.QtCore import QUrl, Qt, pyqtSignal
 from PyQt6.QtGui import QAction, QKeySequence
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -52,7 +52,8 @@ class MainWindow(QtWidgets.QMainWindow):
         open_action.setShortcut(QKeySequence("Ctrl+O"))
         open_action.triggered.connect(self.view_model.handle_load_button)
         self.addAction(open_action)
-
+        self.view_model.resumeCompleted.connect(self.showFinishMessage)
+        
     def dragEnterEvent(self, event):
         """
         Manejador para el evento de entrada de drag and drop.
@@ -63,7 +64,7 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             event.ignore()
 
-    def dropEvent(self, event):
+    def dropEvent(self, event) -> None:
         """
         Manejador para el evento de soltar.
         Extrae las rutas de los archivos y las envía al ViewModel.
@@ -76,3 +77,8 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             event.ignore()
     
+    def showFinishMessage(self):
+        """
+        Muestra un mensaje de información al usuario.
+        """
+        QtWidgets.QMessageBox.information(self, "Completado", "El proceso de resumen ha finalizado.")

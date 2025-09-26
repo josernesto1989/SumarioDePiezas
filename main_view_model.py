@@ -1,6 +1,6 @@
 # Este módulo actúa como el "pegamento" entre la Vista y el Modelo.
 # Maneja la lógica de la UI y los datos de la aplicación.
-from PyQt6.QtCore import QObject, QStringListModel
+from PyQt6.QtCore import QObject, QStringListModel, pyqtSignal
 from PyQt6.QtWidgets import QFileDialog
 from excel_processor import ExcelProcessor
 
@@ -10,6 +10,8 @@ class MainViewModel(QObject):
     El ViewModel de la aplicación.
     Gestiona la lógica de la UI, los modelos de datos y se comunica con el ExcelProcessor.
     """
+    resumeCompleted = pyqtSignal()
+    
     def __init__(self):
         super().__init__()
         self.file_list = []
@@ -49,3 +51,4 @@ class MainViewModel(QObject):
         if file_path:
             excel_processor = ExcelProcessor()
             excel_processor.process_file(self.file_list, file_path)
+            self.resumeCompleted.emit()
