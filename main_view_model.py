@@ -52,3 +52,12 @@ class MainViewModel(QObject):
             excel_processor = ExcelProcessor()
             excel_processor.process_file(self.file_list, file_path)
             self.resumeCompleted.emit()
+    
+    def handle_delete_button(self):
+        """
+        Manejador para eliminar un archivo de la lista.
+        """
+        selected_indexes = self.parent().selectedIndexes()
+        for index in sorted(selected_indexes, reverse=True):
+            del self.file_list[index.row()]
+        self.file_list_model.setStringList(self.file_list)

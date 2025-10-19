@@ -45,7 +45,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # Conectar los widgets con los métodos del ViewModel
         self.pushButtonAdicionar.clicked.connect(self.view_model.handle_load_button)
         self.listView.setModel(self.view_model.file_list_model)
+        self.view_model.setParent(self.listView)
         self.pushButtonResumir.clicked.connect(self.view_model.handle_resumir)
+        self.pushButtonEliminar.clicked.connect(self.view_model.handle_delete_button)
 
         # Configurar atajo de teclado para abrir archivos (Ctrl+O)
         open_action = QAction(self)
@@ -76,6 +78,7 @@ class MainWindow(QtWidgets.QMainWindow):
             event.acceptProposedAction()
         else:
             event.ignore()
+            
     
     def showFinishMessage(self):
         """
